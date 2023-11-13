@@ -1,15 +1,0 @@
-
-{
-java:S1488)"^Immediately return this expression instead of assigning it to the temporary variable "result".(˜Û¤õ8€ı¡¼1
-]	java:S125+"<This block of commented-out lines of code should be removed.(çÑ÷Éıÿÿÿÿ8ŸÉ¡¼1
-Y
-java:S1128	"7Remove this unused import 'java.sql.PreparedStatement'.(òÄ™ƒÿÿÿÿÿ8ŸÉ¡¼1
-K
-java:S1128
-"/Remove this unused import 'java.sql.ResultSet'.(ˆóÚw8 É¡¼1
-O
-java:S1128"2Remove this unused import 'java.sql.SQLException'.(ÛïÆŸ8 É¡¼1
-P
-java:S1068".Remove this unused "connection" private field.(·ãÛöûÿÿÿÿ8 É¡¼1
-^
-java:S1068"<Remove this unused "QUERY_LOAD_ALL_BY_PEDIDO" private field.(˜°—ºüÿÿÿÿ8 É¡¼1
