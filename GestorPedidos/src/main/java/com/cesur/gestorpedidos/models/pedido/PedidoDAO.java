@@ -10,5 +10,6 @@ import java.util.ArrayList;
  */
 public interface PedidoDAO {
 
+    public void deletePedido(Pedido p);
 
 }

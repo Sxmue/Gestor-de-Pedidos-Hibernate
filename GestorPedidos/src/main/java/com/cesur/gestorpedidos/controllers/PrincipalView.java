@@ -28,7 +28,7 @@ public class PrincipalView implements Initializable {
 
     /*Variable utilizada para la obtencion de los pedidos de la base de datos*/
     PedidoDAO pedidoDAO = new PedidoDAOImp();
-
+    ObservableList<Pedido> observablePedidos;
 
     @javafx.fxml.FXML
     private TableView<Pedido> tablaPedidos;
@@ -46,13 +46,15 @@ public class PrincipalView implements Initializable {
     private MenuItem logOut;
     @javafx.fxml.FXML
     private ComboBox<String> comboFecha;
+    @javafx.fxml.FXML
+    private Button btnEliminar;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
         // Obtencion de todos los pedidos del usuario
         List<Pedido> pedidos = Session.getUsuarioLogueado().getPedidos();
-        ObservableList<Pedido> observablePedidos = FXCollections.observableArrayList(pedidos);
+        observablePedidos = FXCollections.observableArrayList(pedidos);
 
 
         txtBienvenido.setText("Bienvenido" + "\n" + Session.getUsuarioLogueado().getNombre());
@@ -125,7 +127,7 @@ public class PrincipalView implements Initializable {
     /**
      * Metodo para la inicialización del combo box
      *
-     * @param observablePedidos
+     * @param observablePedidos observable con la lista de pedidos
      */
     private void inicializadorCombobox(ObservableList<Pedido> observablePedidos) {
         ArrayList<String> anhos = new ArrayList<>(0);
@@ -166,6 +168,27 @@ public class PrincipalView implements Initializable {
 
         App.loadFXML("login.fxml");
         Session.setUsuarioLogueado(null);
+
+    }
+
+    /**
+     * Metodo para eliminar un pedido
+     * @param actionEvent
+     */
+    @javafx.fxml.FXML
+    public void delete(ActionEvent actionEvent) {
+        Pedido p = tablaPedidos.getSelectionModel().getSelectedItem();
+
+        if(p!= null){
+
+            observablePedidos.remove(p);
+            tablaPedidos.getItems().clear();
+            tablaPedidos.getItems().addAll(observablePedidos);
+            tablaPedidos.refresh();
+
+            pedidoDAO.deletePedido(p);
+        }
+
 
     }
 }

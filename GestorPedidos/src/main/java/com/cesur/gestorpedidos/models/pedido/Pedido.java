@@ -33,7 +33,7 @@ public class Pedido implements Serializable {
 
     private Integer total;
 
-    @OneToMany(mappedBy = "pedido",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "pedido",fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private List<Item> items = new ArrayList<>() ;
 
 
