@@ -1,7 +1,5 @@
 package com.cesur.gestorpedidos.controllers;
 
-import com.cesur.gestorpedidos.database.Database;
-
 import com.cesur.gestorpedidos.App;
 import com.cesur.gestorpedidos.Session;
 import com.cesur.gestorpedidos.models.item.Item;
@@ -27,7 +25,7 @@ import java.util.ResourceBundle;
 public class ProductView implements Initializable {
 
     private ObservableList<Item> observableItems;
-    ItemDAOImp itemDAOImp = new ItemDAOImp(Database.getConnection());
+    ItemDAOImp itemDAOImp = new ItemDAOImp();
 
     @javafx.fxml.FXML
     private TableView<Item> tablaProductos;
@@ -57,11 +55,8 @@ public class ProductView implements Initializable {
 
         txtPedido.setText("Pedido:"+"\n"+Session.getPedidoactual().getCodigo());
 
-        // Suponiendo que loadAllByUser() devuelve una lista genérica
-        ArrayList<Item> items = itemDAOImp.loadByPedido(Session.getPedidoactual());
-
         // Crear una ObservableList segura utilizando FXCollections
-        observableItems = FXCollections.observableArrayList(items);
+        observableItems = FXCollections.observableArrayList(Session.getPedidoactual().getItems());
 
         cNombre.setCellValueFactory(fila -> new SimpleStringProperty(fila.getValue().getProducto().getNombre()));
 

@@ -1,6 +1,5 @@
 package com.cesur.gestorpedidos.controllers;
 
-import com.cesur.gestorpedidos.database.Database;
 import com.cesur.gestorpedidos.App;
 import com.cesur.gestorpedidos.Session;
 import com.cesur.gestorpedidos.models.pedido.Pedido;

@@ -28,7 +28,8 @@ public class Item implements Serializable {
 
     private Integer cantidad;
 
-    @OneToOne
+    @ManyToOne
     @JoinColumn(name="idProducto")
     private Producto producto;
+
 }

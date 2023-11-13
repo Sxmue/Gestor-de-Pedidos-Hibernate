@@ -1,7 +1,6 @@
 package com.cesur.gestorpedidos.models.pedido;
 
 import com.cesur.gestorpedidos.models.item.Item;
-import com.cesur.gestorpedidos.models.producto.Producto;
 import com.cesur.gestorpedidos.models.usuario.Usuario;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -34,8 +33,8 @@ public class Pedido implements Serializable {
 
     private Integer total;
 
-    //@OneToMany(mappedBy = "pedido",fetch = FetchType.EAGER)
-    // TODO private List<Item> items;
+    @OneToMany(mappedBy = "pedido",fetch = FetchType.EAGER)
+    private List<Item> items = new ArrayList<>() ;
 
 
 

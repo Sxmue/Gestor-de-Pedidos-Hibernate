@@ -16,7 +16,7 @@
 	</appender>
 
 	<!-- LOGGER/GRIFO PRINCIPAL -->
-	<root level="DEBUG">
+	<root level="INFO">
 
 		<!-- Referencia consola -->
 		<appender-ref ref="mitrazaconsola" />

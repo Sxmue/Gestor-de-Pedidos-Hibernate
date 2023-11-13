@@ -1,6 +1,5 @@
 package com.cesur.gestorpedidos;
 
-import com.cesur.gestorpedidos.database.Database;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
@@ -44,7 +43,6 @@ public class App extends Application {
     }
 
     public static void main(String[] args) {
-        System.out.println(Database.getConnection());
 
         launch();
     }

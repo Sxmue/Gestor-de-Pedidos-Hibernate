@@ -1,14 +1,10 @@
 package com.cesur.gestorpedidos.models.item;
 
-import com.cesur.gestorpedidos.database.Database;
 import com.cesur.gestorpedidos.models.pedido.Pedido;
 import com.cesur.gestorpedidos.models.producto.ProductoDAOImp;
 import org.slf4j.LoggerFactory;
 
 import java.sql.Connection;
-import java.sql.PreparedStatement;
-import java.sql.ResultSet;
-import java.sql.SQLException;
 import java.util.ArrayList;
 
 /**
@@ -20,9 +16,9 @@ public class ItemDAOImp implements ItemDAO{
     static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ItemDAOImp.class);
 
     /*Conexion a la base de datos que va a recibir de la clase Database*/
-    private final Connection connection;
 
-    ProductoDAOImp productDAOImp = new ProductoDAOImp(Database.getConnection());
+
+    ProductoDAOImp productDAOImp = new ProductoDAOImp();
 
 
     //Constantes para las Querys
@@ -30,10 +26,10 @@ public class ItemDAOImp implements ItemDAO{
 
     /**
      * Constructor que almacena la conexion en la variable c para trabajar con ella
-     * @param c Conexion que viene de la clase Database
+     *
      */
-    public ItemDAOImp(Connection c){
-        this.connection=c;
+    public ItemDAOImp(){
+
 
     }
     @Override

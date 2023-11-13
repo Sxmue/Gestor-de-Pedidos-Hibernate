@@ -16,8 +16,6 @@ public class ProductoDAOImp implements ProductoDAO{
     /* Log para trazar la clase */
     static final org.slf4j.Logger LOG = LoggerFactory.getLogger(ProductoDAOImp.class);
 
-    /*Conexion a la base de datos que va a recibir de la clase Database*/
-    private final Connection connection;
 
 
     //Constantes para las Querys
@@ -25,10 +23,9 @@ public class ProductoDAOImp implements ProductoDAO{
 
     /**
      * Constructor que almacena la conexion en la variable c para trabajar con ella
-     * @param c Conexion que viene de la clase Database
+     *
      */
-    public ProductoDAOImp(Connection c){
-        this.connection=c;
+    public ProductoDAOImp(){
 
     }
 
@@ -41,6 +38,7 @@ public class ProductoDAOImp implements ProductoDAO{
     public Producto load(Integer id) {
         Producto result = null;
 
+        /*
         try(PreparedStatement pst=connection.prepareStatement(QUERY_LOAD_BY_ID)){
             LOG.info(QUERY_LOAD_BY_ID);
 
@@ -62,14 +60,14 @@ public class ProductoDAOImp implements ProductoDAO{
 
             }
 
-            return result;
+
 
         } catch (SQLException e) {
             throw new RuntimeException(e);
-        }
+        }*/
 
 
 
-
+ return result;
     }
 }

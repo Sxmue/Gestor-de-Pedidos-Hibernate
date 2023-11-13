@@ -46,10 +46,6 @@ l
 S
 #.idea/sonarlint/issuestore/index.pb,9\f\9fe84ebb15faf917b7def6236dba604453cc61e0
 Å
-Q.idea/sonarlint/securityhotspotstore/1/8/1836de06c8c67ff5b4f6b7a4a862951672846f60,7\8\784de4491713b82f9d30a5e82b0f204cd29c6f07
-w
-G.idea/sonarlint/issuestore/1/8/1836de06c8c67ff5b4f6b7a4a862951672846f60,c\1\c1e7a42bab872cbf1109354d1d0de4c6d57cccb9
-Å
 Q.idea/sonarlint/securityhotspotstore/6/4/640f19f7f48d34ee00fce3d8df29cb264a477886,c\0\c0bee20e732d9adbc129b89df1e4b9118c0ae599
 Å
 Q.idea/sonarlint/securityhotspotstore/c/8/c8a66b3896067273b2140749d80d118206606e54,4\3\435a87a7a156bbb3de355f40b60bfb5d5baa8b56
@@ -61,5 +57,3 @@ j
 :src/main/java/com/cesur/gestorpedidos/HelloController.java,c\1\c105f8c8a88eed62733e4335d88d629c913fb8b8
 `
 0src/main/java/com/cesur/gestorpedidos/Login.java,d\b\dba161e97a3c1e21a7a09a4e6593a3ffd1551413
-k
-;src/main/java/com/cesur/gestorpedidos/HelloApplication.java,d\d\ddcbce5f85d9c761bfac73e4621231af96565fbd
