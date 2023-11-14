@@ -28,6 +28,17 @@ public class Usuario implements Serializable {
     private String pass;
     private String email;
 
-    @OneToMany(mappedBy = "usuario",fetch = FetchType.EAGER)
+    @OneToMany(mappedBy = "usuario",fetch = FetchType.EAGER,cascade = CascadeType.REMOVE)
     private List<Pedido> pedidos = new ArrayList<>();
+
+    @Override
+    public String toString() {
+        return "Usuario{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", pass='" + pass + '\'' +
+                ", email='" + email + '\'' +
+                ", pedidos=" + pedidos +
+                '}';
+    }
 }

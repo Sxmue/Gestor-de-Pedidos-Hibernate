@@ -5,6 +5,7 @@ import com.cesur.gestorpedidos.Session;
 import com.cesur.gestorpedidos.models.pedido.Pedido;
 import com.cesur.gestorpedidos.models.pedido.PedidoDAO;
 import com.cesur.gestorpedidos.models.pedido.PedidoDAOImp;
+import com.cesur.gestorpedidos.models.usuario.UsuarioDAOImp;
 import javafx.beans.property.SimpleObjectProperty;
 import javafx.beans.property.SimpleStringProperty;
 import javafx.collections.FXCollections;
@@ -16,6 +17,8 @@ import javafx.scene.input.MouseEvent;
 import javafx.event.Event;
 
 import java.net.URL;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
@@ -28,7 +31,10 @@ public class PrincipalView implements Initializable {
 
     /*Variable utilizada para la obtencion de los pedidos de la base de datos*/
     PedidoDAO pedidoDAO = new PedidoDAOImp();
+    UsuarioDAOImp usuarioDao = new UsuarioDAOImp();
     ObservableList<Pedido> observablePedidos;
+
+    List<Pedido> pedidos = new ArrayList<>(0);
 
     @javafx.fxml.FXML
     private TableView<Pedido> tablaPedidos;
@@ -47,13 +53,24 @@ public class PrincipalView implements Initializable {
     @javafx.fxml.FXML
     private ComboBox<String> comboFecha;
     @javafx.fxml.FXML
-    private Button btnEliminar;
+    private Button btnCrear;
+    @javafx.fxml.FXML
+    private Button btnEliminar1;
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
+        if(!pedidos.isEmpty()) {
+            pedidos.clear();
+            observablePedidos.clear();
+            observablePedidos = FXCollections.observableArrayList(pedidos);
+            tablaPedidos.getItems().clear();
+        }
+
         // Obtencion de todos los pedidos del usuario
-        List<Pedido> pedidos = Session.getUsuarioLogueado().getPedidos();
+         pedidos = Session.getUsuarioLogueado().getPedidos();
+
+
         observablePedidos = FXCollections.observableArrayList(pedidos);
 
 
@@ -118,6 +135,8 @@ public class PrincipalView implements Initializable {
      * @param observablePedidos observable con los pedidos del usuario
      */
     private void inicializadorTabla(ObservableList<Pedido> observablePedidos) {
+        tablaPedidos.getItems().clear();
+        tablaPedidos.refresh();
         cCodigo.setCellValueFactory(fila -> new SimpleStringProperty(fila.getValue().getCodigo()));
         cFecha.setCellValueFactory(fila -> new SimpleStringProperty(fila.getValue().getFecha()));
         cTotal.setCellValueFactory(fila -> new SimpleObjectProperty<>((fila.getValue().getTotal())));
@@ -177,18 +196,58 @@ public class PrincipalView implements Initializable {
      */
     @javafx.fxml.FXML
     public void delete(ActionEvent actionEvent) {
+
+        int index = observablePedidos.indexOf(tablaPedidos.getSelectionModel().getSelectedItem());
         Pedido p = tablaPedidos.getSelectionModel().getSelectedItem();
 
         if(p!= null){
+
+
+            //TODO PREGUNTARLE LA DUDA A FRANCISCO DE PORQUE HIBERNATE NO ME BORRA EL PEDIDO DE LA LISTA DE PEDIDOS DEL USUARIO AUTOMATICAMENTE
+            Session.getUsuarioLogueado().getPedidos().remove(index);
+            pedidoDAO.borrarPedido(p);
+
+            //Preguntarle sobre este metodo
+            //usuarioDao.borrarPedido(p);
+
 
             observablePedidos.remove(p);
             tablaPedidos.getItems().clear();
             tablaPedidos.getItems().addAll(observablePedidos);
             tablaPedidos.refresh();
 
-            pedidoDAO.deletePedido(p);
+
         }
 
+    }
+
+    @javafx.fxml.FXML
+    public void crearPedido(ActionEvent actionEvent) {
+
+        Pedido p = new Pedido();
+
+        LocalDate currentDate = LocalDate.now();
+
+        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
+        String fecha = currentDate.format(formatter);
+
+        p.setFecha(fecha);
+
+        p.setUsuario(Session.getUsuarioLogueado());
+
+        p.setCodigo("PED-");
+
+        //---------------------------------------
+
+        Session.getUsuarioLogueado().getPedidos().add(p);
+
+        Pedido t =pedidoDAO.guardarPedido(p);
+
+        Session.setPedidoactual(t);
+
+        App.loadFXML("product-view.fxml");
 
     }
+
 }

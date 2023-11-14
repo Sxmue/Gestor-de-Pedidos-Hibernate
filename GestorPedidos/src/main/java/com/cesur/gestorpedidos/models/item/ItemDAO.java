@@ -10,7 +10,7 @@ import java.util.ArrayList;
  */
 public interface ItemDAO {
 
-    public ArrayList<Item> loadByPedido(Pedido p);
+    public ArrayList<Item> allItems();
 
 
 }

@@ -32,4 +32,14 @@ public class Item implements Serializable {
     @JoinColumn(name="idProducto")
     private Producto producto;
 
+
+    @Override
+    public String toString() {
+        return "Item{" +
+                "id=" + id +
+                ", pedido=" + pedido.getCodigo() +
+                ", cantidad=" + cantidad +
+                ", producto=" + producto.getNombre() +
+                '}';
+    }
 }

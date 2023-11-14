@@ -1,4 +1,6 @@
 
-\
-java:S1118
-":Add a private constructor to hide the implicit public one.(ÂÚãýüÿÿÿÿ8ÓŸÝý»1
+L	java:S1068"+Replace this use of System.out by a logger.(©þêÜúÿÿÿÿ8Ë¸…Ö¼1
+g
+java:S1128"ERemove this unused import 'com.cesur.gestorpedidos.models.item.Item'.(¡Ë¿›øÿÿÿÿ8¾½±Ö¼1
+M
+java:S1128	"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8¾½±Ö¼1

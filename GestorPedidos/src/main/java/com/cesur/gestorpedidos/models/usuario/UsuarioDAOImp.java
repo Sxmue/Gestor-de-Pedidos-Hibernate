@@ -1,7 +1,9 @@
 package com.cesur.gestorpedidos.models.usuario;
 
 
+import com.cesur.gestorpedidos.models.pedido.Pedido;
 import org.hibernate.Session;
+import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.LoggerFactory;
 import com.cesur.gestorpedidos.database.HibernateUtil;
@@ -55,6 +57,24 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
       return u;
     }
+
+    public void borrarPedido(Pedido p){
+
+        //Lambda para acceder a la base de datos
+        HibernateUtil.getSessionFactory().inTransaction(session -> {
+
+            //Traemos el objeto a borrar para que sea persistente
+            Usuario u =session.get(Usuario.class, com.cesur.gestorpedidos.Session.getUsuarioLogueado().getId());
+
+            u.getPedidos().remove(p);
+
+
+        });
+
+
+
+    }
+
 
 
 }

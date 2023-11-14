@@ -1,5 +1,9 @@
 
 W
-java:S1141%"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8†‚Áû»1
-L	java:S106*"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8Œ‚Áû»1
-L	java:S1062"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8€‘Ãû»1
+java:S1141'"5Extract this nested try block into a separate method.(¡»¢üùÿÿÿÿ8¢éİÖ¼1
+L	java:S106,"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8°éİÖ¼1
+L	java:S1064"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8±éİÖ¼1
+k
+java:S1128"IRemove this unused import 'com.cesur.gestorpedidos.models.pedido.Pedido'.(ı¤³áüÿÿÿÿ8¾¸êÖ¼1
+S
+java:S1128"6Remove this unused import 'org.hibernate.Transaction'.(ìÌè³8¾¸êÖ¼1

@@ -55,9 +55,14 @@
                   <Cursor fx:constant="HAND" />
                </cursor>
             </TableView>
-            <FlowPane alignment="TOP_RIGHT">
+            <FlowPane alignment="TOP_RIGHT" hgap="20.0">
                <children>
-                  <Button fx:id="btnEliminar" mnemonicParsing="false" onAction="#delete" styleClass="btn" text="Eliminar">
+                  <Button fx:id="btnCrear" mnemonicParsing="false" onAction="#crearPedido" styleClass="btn" text="Crear pedido">
+                     <font>
+                        <Font name="System Bold" size="14.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnEliminar1" mnemonicParsing="false" onAction="#delete" styleClass="btn" text="Eliminar">
                      <font>
                         <Font name="System Bold" size="14.0" />
                      </font>
