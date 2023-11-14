@@ -5,7 +5,6 @@ import com.cesur.gestorpedidos.Session;
 import com.cesur.gestorpedidos.models.item.Item;
 import com.cesur.gestorpedidos.models.item.ItemDAOImp;
 import com.cesur.gestorpedidos.models.pedido.PedidoDAOImp;
-import com.cesur.gestorpedidos.models.producto.Producto;
 import com.itextpdf.text.DocumentException;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
@@ -23,6 +22,7 @@ import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
 import java.util.ArrayList;
+import java.util.List;
 import java.util.ResourceBundle;
 
 public class ProductView implements Initializable {
@@ -30,7 +30,7 @@ public class ProductView implements Initializable {
     private ObservableList<Item> observableItems;
     ItemDAOImp itemDAOImp = new ItemDAOImp();
     PedidoDAOImp pedidoDAO = new PedidoDAOImp();
-
+    List<Item> items = new ArrayList<>();
     @javafx.fxml.FXML
     private TableView<Item> tablaProductos;
     @javafx.fxml.FXML
@@ -58,6 +58,10 @@ public class ProductView implements Initializable {
     private Button btnGuardar;
     @javafx.fxml.FXML
     private Spinner<Integer> spinnerCantidad;
+    @javafx.fxml.FXML
+    private Button btnAñadir;
+    @javafx.fxml.FXML
+    private Button btnEliminar;
 
 
     @Override
@@ -115,16 +119,6 @@ public class ProductView implements Initializable {
         comboProductos.valueProperty().addListener((observableValue, s, t1) -> {
 
             spinnerCantidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,comboProductos.getValue().getProducto().getCantidad(), 1,1));
-
-            Item it = new Item();
-
-            it.setCantidad(spinnerCantidad.getValue()); //Poner otro combo para setear la cantidad
-            it.setPedido(Session.getPedidoactual());
-            it.setProducto(t1.getProducto());
-            Session.getPedidoactual().setTotal((int) (Session.getPedidoactual().getTotal()+it.getProducto().getPrecio()));
-            Session.getPedidoactual().getItems().add(it);
-
-            tablaProductos.getItems().add(it);
 
 
         });
@@ -189,7 +183,56 @@ public class ProductView implements Initializable {
     public void saveItems(ActionEvent actionEvent) {
 
         pedidoDAO.actualizarPedido(Session.getPedidoactual());
+
+        for (Item it:items) {
+            Session.getPedidoactual().setTotal((int) (Session.getPedidoactual().getTotal()+it.getProducto().getPrecio()*it.getCantidad()));
+            Session.getPedidoactual().getItems().add(it);
+            itemDAOImp.addItem(it);
+        }
+
         Session.setPedidoactual(null);
+
         App.loadFXML("principal-view.fxml");
+    }
+
+    @javafx.fxml.FXML
+    public void añadir(ActionEvent actionEvent) {
+
+        Item it = new Item();
+
+        it.setCantidad(spinnerCantidad.getValue()); //Poner otro combo para setear la cantidad
+        it.setPedido(Session.getPedidoactual());
+        it.setProducto(comboProductos.getValue().getProducto());
+        items.add(it);
+
+
+        tablaProductos.getItems().add(it);
+
+
+    }
+
+    @javafx.fxml.FXML
+    public void eliminar(ActionEvent actionEvent) {
+
+        try {
+            if (tablaProductos.getSelectionModel().getSelectedItem() != null) {
+
+                itemDAOImp.delete(tablaProductos.getSelectionModel().getSelectedItem());
+
+                if (Session.getPedidoactual().getTotal() > tablaProductos.getSelectionModel().getSelectedItem().getPedido().getTotal()) {
+                    Session.getPedidoactual().setTotal((int) (Session.getPedidoactual().getTotal() - tablaProductos.getSelectionModel().getSelectedItem().getProducto().getPrecio()));
+                } else Session.getPedidoactual().setTotal(0);
+
+                Session.getPedidoactual().getItems().remove(tablaProductos.getSelectionModel().getSelectedItem());
+
+                tablaProductos.getItems().remove(tablaProductos.getSelectionModel().getSelectedItem());
+
+                tablaProductos.refresh();
+            }
+        }catch (IllegalArgumentException ignored){
+
+        }
+
+
     }
 }

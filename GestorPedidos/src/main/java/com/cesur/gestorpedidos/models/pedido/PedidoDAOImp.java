@@ -3,6 +3,7 @@ package com.cesur.gestorpedidos.models.pedido;
 import com.cesur.gestorpedidos.Session;
 import com.cesur.gestorpedidos.database.HibernateUtil;
 import com.cesur.gestorpedidos.models.item.Item;
+import com.cesur.gestorpedidos.models.usuario.Usuario;
 import org.hibernate.Transaction;
 import org.slf4j.LoggerFactory;
 
@@ -63,14 +64,14 @@ public class PedidoDAOImp implements PedidoDAO {
     }
 
     @Override
-    public void actualizarPedido(Pedido p) {
+    public void  actualizarPedido(Pedido p) {
 
 
         try (org.hibernate.Session s = HibernateUtil.getSessionFactory().openSession()) {
 
             Transaction t = s.beginTransaction();
 
-            Pedido update = s.get(Pedido.class, Session.getPedidoactual().getId());
+            Pedido update = s.get(Pedido.class, p.getId());
 
             Pedido.merge(update, p);
 

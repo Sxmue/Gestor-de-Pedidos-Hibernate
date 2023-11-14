@@ -1,9 +1,7 @@
 package com.cesur.gestorpedidos.models.item;
 
-import com.cesur.gestorpedidos.models.pedido.Pedido;
-import com.cesur.gestorpedidos.models.producto.Producto;
-
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Interfaz para definir el DAO de Item
@@ -11,6 +9,8 @@ import java.util.ArrayList;
 public interface ItemDAO {
 
     public ArrayList<Item> allItems();
+    public void delete(Item it);
+    public void addItem(Item it);
 
 
 }

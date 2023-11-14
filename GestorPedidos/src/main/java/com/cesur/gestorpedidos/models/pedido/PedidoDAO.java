@@ -9,6 +9,6 @@ public interface PedidoDAO {
 
     public Pedido guardarPedido(Pedido p);
 
-    public void actualizarPedido(Pedido p);
+    public void  actualizarPedido(Pedido p);
 
 }

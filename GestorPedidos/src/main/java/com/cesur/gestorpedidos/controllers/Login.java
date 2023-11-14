@@ -51,12 +51,13 @@ public class Login implements Initializable {
 
         String name = txtUser.getText();
         String pass = txtPass.getText();
+
         Usuario u = usuarioDAO.load(name, pass);
 
         if (!name.isEmpty() && !pass.isEmpty()) {
             LOG.info("Datos validos");
 
-            if (u.getId()!=null) {
+            if (u!=null) {
 
                 LOG.info("Usuario Valido");
 

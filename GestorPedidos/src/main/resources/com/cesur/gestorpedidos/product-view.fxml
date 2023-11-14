@@ -25,8 +25,13 @@
             <FlowPane alignment="TOP_RIGHT" hgap="20.0">
                <children>
                   <ComboBox id="combo" fx:id="comboProductos" prefWidth="150.0" promptText="Añadir Productos" visibleRowCount="3" />
-                  <Spinner fx:id="spinnerCantidad" maxWidth="80.0" />
+                  <Spinner id="spinner" fx:id="spinnerCantidad" maxWidth="80.0" stylesheets="@style.css" />
                   <Button fx:id="btnAñadir" mnemonicParsing="false" onAction="#añadir" styleClass="btn" text="Añadir">
+                     <font>
+                        <Font name="System Bold" size="15.0" />
+                     </font>
+                  </Button>
+                  <Button fx:id="btnEliminar" layoutX="482.0" layoutY="10.0" mnemonicParsing="false" onAction="#eliminar" styleClass="btn" text="Eliminar">
                      <font>
                         <Font name="System Bold" size="15.0" />
                      </font>
