@@ -19,10 +19,7 @@ import javafx.event.Event;
 import java.net.URL;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
-import java.util.ResourceBundle;
+import java.util.*;
 
 /**
  * Clase que representa la ventana principal en nuestra aplicacion
@@ -34,7 +31,7 @@ public class PrincipalView implements Initializable {
     UsuarioDAOImp usuarioDao = new UsuarioDAOImp();
     ObservableList<Pedido> observablePedidos;
 
-    List<Pedido> pedidos = new ArrayList<>(0);
+
 
     @javafx.fxml.FXML
     private TableView<Pedido> tablaPedidos;
@@ -60,29 +57,19 @@ public class PrincipalView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        if(!pedidos.isEmpty()) {
-            pedidos.clear();
-            observablePedidos.clear();
-            observablePedidos = FXCollections.observableArrayList(pedidos);
-            tablaPedidos.getItems().clear();
-        }
-
-        // Obtencion de todos los pedidos del usuario
-         pedidos = Session.getUsuarioLogueado().getPedidos();
-
-
-        observablePedidos = FXCollections.observableArrayList(pedidos);
+        //Observable con los pedidos del ususario
+        observablePedidos = FXCollections.observableArrayList(Session.getUsuarioLogueado().getPedidos());
 
 
         txtBienvenido.setText("Bienvenido" + "\n" + Session.getUsuarioLogueado().getNombre());
 
 
-        /* Inicializacion de la tabla Pedidos*/
-        inicializadorTabla(observablePedidos);
+        //Inicializacion de la tabla Pedidos
+        inicializadorTabla();
 
 
 
-        /* Combobox para filtar por Fecha*/
+        //---------Combobox---------/
 
         //Inicializacion del combobox
         inicializadorCombobox(observablePedidos);
@@ -91,20 +78,31 @@ public class PrincipalView implements Initializable {
         //Listener a la propiedad del combo para cambiar los datos mostrados en la tabla segun lo seleccionado
         comboFecha.valueProperty().addListener((observableValue, s, t1) -> {
 
-            ObservableList<Pedido> observableFecha = FXCollections.observableArrayList(pedidos);
+            //Observable espejo que utilizamos para mostar solo los pedidos de la fecha seleccionada
+            ObservableList<Pedido> observableFecha = FXCollections.observableArrayList(Session.getUsuarioLogueado().getPedidos());
+
+            //Si esta seleccionada una opcion que no sea Cualquiera en el combo
             if (!Objects.equals(t1, "Cualquiera")) {
 
+                //Recorremos todos los pedidos
                 for (Pedido r : observablePedidos) {
 
+                    //Si el pedido no tiene la fecha seleccionada
                     if (!r.getFecha().contains(t1)) {
+
+                        //lo eliminamos de la lista espejo
                         observableFecha.remove(r);
 
                     }
 
                 }
+                //Limpiamos la tabla
                 tablaPedidos.getItems().clear();
+                //Le pasamos la espejo con los pedidos de la decha que queremos
                 tablaPedidos.getItems().addAll(observableFecha);
             } else {
+
+                //En cambio si esta cualquiera la tabla mostrara la lista original
                 tablaPedidos.getItems().clear();
                 tablaPedidos.getItems().addAll(observablePedidos);
             }
@@ -115,7 +113,7 @@ public class PrincipalView implements Initializable {
     }
 
     /**
-     * Metodo para mostrar la informacion del pedido
+     * Metodo para mostrar la informacion del pedido con un doble click
      * @param event Listener de la propiedad
      */
     @javafx.fxml.FXML
@@ -132,9 +130,8 @@ public class PrincipalView implements Initializable {
     /**
      * Metodo para la inicializacion de la tabla pedidos
      *
-     * @param observablePedidos observable con los pedidos del usuario
      */
-    private void inicializadorTabla(ObservableList<Pedido> observablePedidos) {
+    private void inicializadorTabla() {
         tablaPedidos.getItems().clear();
         tablaPedidos.refresh();
         cCodigo.setCellValueFactory(fila -> new SimpleStringProperty(fila.getValue().getCodigo()));
@@ -149,7 +146,7 @@ public class PrincipalView implements Initializable {
      * @param observablePedidos observable con la lista de pedidos
      */
     private void inicializadorCombobox(ObservableList<Pedido> observablePedidos) {
-        ArrayList<String> anhos = new ArrayList<>(0);
+       Set<String> anhos = new HashSet<>();
         anhos.add("Cualquiera");
 
         for (Pedido s : observablePedidos) {
@@ -197,48 +194,32 @@ public class PrincipalView implements Initializable {
     @javafx.fxml.FXML
     public void delete(ActionEvent actionEvent) {
 
-        int index = observablePedidos.indexOf(tablaPedidos.getSelectionModel().getSelectedItem());
         Pedido p = tablaPedidos.getSelectionModel().getSelectedItem();
 
         if(p!= null){
 
 
             //TODO PREGUNTARLE LA DUDA A FRANCISCO DE PORQUE HIBERNATE NO ME BORRA EL PEDIDO DE LA LISTA DE PEDIDOS DEL USUARIO AUTOMATICAMENTE
-            Session.getUsuarioLogueado().getPedidos().remove(index);
             pedidoDAO.borrarPedido(p);
-
-            //Preguntarle sobre este metodo
-            //usuarioDao.borrarPedido(p);
-
+            Session.setUsuarioLogueado(usuarioDao.borrarPedido(p));
 
             observablePedidos.remove(p);
             tablaPedidos.getItems().clear();
             tablaPedidos.getItems().addAll(observablePedidos);
             tablaPedidos.refresh();
 
-
         }
 
     }
 
+    /**
+     * Listener para crear un pedido
+     * @param actionEvent
+     */
     @javafx.fxml.FXML
     public void crearPedido(ActionEvent actionEvent) {
 
         Pedido p = new Pedido();
-
-        LocalDate currentDate = LocalDate.now();
-
-        DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-        String fecha = currentDate.format(formatter);
-
-        p.setFecha(fecha);
-
-        p.setUsuario(Session.getUsuarioLogueado());
-
-        p.setCodigo("PED-");
-
-        //---------------------------------------
 
         Session.getUsuarioLogueado().getPedidos().add(p);
 

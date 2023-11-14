@@ -1,6 +1,9 @@
 
-L	java:S1068"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8Ë¸…Ö¼1
+L	java:S106:"+Replace this use of System.out by a logger.(©şêÜúÿÿÿÿ8Áİ„î¼1
+G	java:S106;"+Replace this use of System.out by a logger.(ÜÀçı8Áİ„î¼1
+L	java:S106<"+Replace this use of System.out by a logger.(€°­ùÿÿÿÿ8Áİ„î¼1
+G	java:S106="+Replace this use of System.out by a logger.(õı¥8Áİ„î¼1
 g
-java:S1128"ERemove this unused import 'com.cesur.gestorpedidos.models.item.Item'.(¡Ë¿›øÿÿÿÿ8¾½±Ö¼1
+java:S1128"ERemove this unused import 'com.cesur.gestorpedidos.models.item.Item'.(¡Ë¿›øÿÿÿÿ8Ãİ„î¼1
 M
-java:S1128	"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8¾½±Ö¼1
+java:S1128	"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8Ãİ„î¼1

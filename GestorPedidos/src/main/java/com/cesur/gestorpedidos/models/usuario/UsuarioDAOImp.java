@@ -58,21 +58,22 @@ public class UsuarioDAOImp implements UsuarioDAO {
       return u;
     }
 
-    public void borrarPedido(Pedido p){
+    public Usuario borrarPedido(Pedido p){
 
-        //Lambda para acceder a la base de datos
-        HibernateUtil.getSessionFactory().inTransaction(session -> {
+        Usuario result = null;
+
+        try(Session s = HibernateUtil.getSessionFactory().openSession()){
 
             //Traemos el objeto a borrar para que sea persistente
-            Usuario u =session.get(Usuario.class, com.cesur.gestorpedidos.Session.getUsuarioLogueado().getId());
+            Usuario u =s.get(Usuario.class, com.cesur.gestorpedidos.Session.getUsuarioLogueado().getId());
 
             u.getPedidos().remove(p);
 
+                result=u;
+        }
 
-        });
 
-
-
+        return result;
     }
 
 

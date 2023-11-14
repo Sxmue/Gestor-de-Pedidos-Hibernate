@@ -20,16 +20,16 @@ public class PedidoDAOImp implements PedidoDAO {
     @Override
     public void borrarPedido(Pedido p) {
 
-            //Lambda para acceder a la base de datos
-            HibernateUtil.getSessionFactory().inTransaction(session -> {
+        //Lambda para acceder a la base de datos
+        HibernateUtil.getSessionFactory().inTransaction(session -> {
 
-                //Traemos el objeto a borrar para que sea persistente
-                Pedido pd = session.get(Pedido.class, p.getId());
+            //Traemos el objeto a borrar para que sea persistente
+            Pedido pd = session.get(Pedido.class, p.getId());
 
-                //Lo eliminamos
-                session.remove(pd);
+            //Lo eliminamos
+            session.remove(pd);
 
-            });
+        });
 
     }
 
@@ -38,27 +38,23 @@ public class PedidoDAOImp implements PedidoDAO {
 
         Pedido pSave = null;
 
-        try(org.hibernate.Session s = HibernateUtil.getSessionFactory().openSession()){
+        try (org.hibernate.Session s = HibernateUtil.getSessionFactory().openSession()) {
             Transaction t = s.beginTransaction();
 
 
             s.persist(p);
 
-            p.setCodigo(p.getCodigo()+p.getId());
+            p.setCodigo(p.getCodigo() + p.getId());
 
 
-            pSave=p;
+            pSave = p;
 
             t.commit();
 
 
+        } catch (Exception e) {
 
-        }catch (Exception e){
-
-            System.out.println(e.getMessage());
-            System.out.println("Error al intentar persistir el pedido. Detalles del pedido:");
-            System.out.println("ID del Pedido: " + p.getId()); // Asegúrate de que el ID se haya asignado correctamente
-            System.out.println("Otros detalles del Pedido: " + p); // Puedes imprimir otros detalles relevantes del Pedido
+            LOG.error(e.getMessage());
 
         }
 
@@ -70,7 +66,7 @@ public class PedidoDAOImp implements PedidoDAO {
     public void actualizarPedido(Pedido p) {
 
 
-        try(org.hibernate.Session s = HibernateUtil.getSessionFactory().openSession()){
+        try (org.hibernate.Session s = HibernateUtil.getSessionFactory().openSession()) {
 
             Transaction t = s.beginTransaction();
 
@@ -80,7 +76,6 @@ public class PedidoDAOImp implements PedidoDAO {
 
             //Ejecutamos el commit y automaticamente se actualiza la base de datos
             t.commit();
-
 
 
         }
