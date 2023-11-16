@@ -27,10 +27,18 @@ import java.util.ResourceBundle;
 
 public class ProductView implements Initializable {
 
+    /*Obervable para el trabajo con la lista*/
     private ObservableList<Item> observableItems;
+
+    /*Variable para trabajar con el dao Items*/
     ItemDAOImp itemDAOImp = new ItemDAOImp();
+
+    /*Variable para trabajar con el dao Pedidos*/
     PedidoDAOImp pedidoDAO = new PedidoDAOImp();
+
+    /*Lista para guardar los items creados*/
     List<Item> items = new ArrayList<>();
+
     @javafx.fxml.FXML
     private TableView<Item> tablaProductos;
     @javafx.fxml.FXML
@@ -67,13 +75,55 @@ public class ProductView implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
 
-        if(comboProductos.getValue()!=null) {
+        if (comboProductos.getValue() != null) {
             spinnerCantidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, comboProductos.getValue().getProducto().getCantidad(), 1, 1));
         }
 
-        txtPedido.setText("Pedido:"+"\n"+Session.getPedidoactual().getCodigo());
+        txtPedido.setText("Pedido:" + "\n" + Session.getPedidoactual().getCodigo());
 
-        // Crear una ObservableList segura utilizando FXCollections
+
+        //Inicializamos la tabla
+        inicializadorTablaItems();
+
+
+        //Mapeo del combo para que utilice el nombre de los productos
+        comboProductos.setConverter(new StringConverter<Item>() {
+            @Override
+            public String toString(Item item) {
+
+                if (item != null) {
+
+                    return item.getProducto().getNombre();
+                } else {
+
+                    return null;
+                }
+            }
+
+            @Override
+            public Item fromString(String s) {
+                return null;
+            }
+        });
+
+        //Inicializacion del combo
+        comboProductos.getItems().addAll(itemDAOImp.allItems());
+
+
+        //Listener a la propiedad del combo para cambiar los datos mostrados en la tabla segun lo seleccionado
+        comboProductos.valueProperty().addListener((observableValue, s, t1) -> {
+
+            spinnerCantidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, comboProductos.getValue().getProducto().getCantidad(), 1, 1));
+
+
+        });
+
+    }
+
+    /**
+     * Metodo inicializador de la tabla Items
+     */
+    private void inicializadorTablaItems() {
         observableItems = FXCollections.observableArrayList(Session.getPedidoactual().getItems());
 
         cNombre.setCellValueFactory(fila -> new SimpleStringProperty(fila.getValue().getProducto().getNombre()));
@@ -85,46 +135,6 @@ public class ProductView implements Initializable {
         cTotal.setCellValueFactory(fila -> new SimpleObjectProperty<>((fila.getValue().getCantidad() * fila.getValue().getProducto().getPrecio())));
 
         tablaProductos.getItems().addAll(observableItems);
-
-
-        //Mapeo del combo para que utilice el nombre de los productos
-        comboProductos.setConverter(new StringConverter<Item>() {
-            @Override
-            public String toString(Item item) {
-
-                if(item!= null){
-
-                    return item.getProducto().getNombre();
-                }else{
-
-                    return null;
-                }
-
-
-
-            }
-
-            @Override
-            public Item fromString(String s) {
-                return null;
-            }
-        });
-
-        comboProductos.getItems().addAll(itemDAOImp.allItems());
-
-
-
-
-        //Listener a la propiedad del combo para cambiar los datos mostrados en la tabla segun lo seleccionado
-        comboProductos.valueProperty().addListener((observableValue, s, t1) -> {
-
-            spinnerCantidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1,comboProductos.getValue().getProducto().getCantidad(), 1,1));
-
-
-        });
-
-
-
     }
 
     @javafx.fxml.FXML
@@ -155,7 +165,7 @@ public class ProductView implements Initializable {
     public void exportarPDF(ActionEvent actionEvent) {
         try (FileOutputStream fileOut = new FileOutputStream("TablaProductos.pdf")) {
             Document document = new Document();
-            PdfWriter.getInstance( document, fileOut);
+            PdfWriter.getInstance(document, fileOut);
             (document).open();
 
             // Crear una tabla en el documento PDF
@@ -182,13 +192,20 @@ public class ProductView implements Initializable {
     @javafx.fxml.FXML
     public void saveItems(ActionEvent actionEvent) {
 
-        pedidoDAO.actualizarPedido(Session.getPedidoactual());
+        //Para cada item creado en la lista
+        for (Item it : items) {
+            //cambiamos el total del pedido
+            Session.getPedidoactual().setTotal((int) (Session.getPedidoactual().getTotal() + it.getProducto().getPrecio() * it.getCantidad()));
 
-        for (Item it:items) {
-            Session.getPedidoactual().setTotal((int) (Session.getPedidoactual().getTotal()+it.getProducto().getPrecio()*it.getCantidad()));
+            //Se lo añadimos en local a la lista
             Session.getPedidoactual().getItems().add(it);
+
+            //Persistimos dicho item
             itemDAOImp.addItem(it);
         }
+
+        //Sincronizamos el objeto en la base de datos con el pedido actual
+        pedidoDAO.actualizarPedido(Session.getPedidoactual());
 
         Session.setPedidoactual(null);
 
@@ -198,14 +215,18 @@ public class ProductView implements Initializable {
     @javafx.fxml.FXML
     public void añadir(ActionEvent actionEvent) {
 
+        //Creamos un nuevo item
         Item it = new Item();
 
+        //Setteamos sus valores
         it.setCantidad(spinnerCantidad.getValue()); //Poner otro combo para setear la cantidad
         it.setPedido(Session.getPedidoactual());
         it.setProducto(comboProductos.getValue().getProducto());
+
+        //Lo añadimos a la lista de productos creados
         items.add(it);
 
-
+        //Lo añadimos a la tabla tambien
         tablaProductos.getItems().add(it);
 
 
@@ -214,24 +235,36 @@ public class ProductView implements Initializable {
     @javafx.fxml.FXML
     public void eliminar(ActionEvent actionEvent) {
 
-        try {
-            if (tablaProductos.getSelectionModel().getSelectedItem() != null) {
+        var alert = new Alert(Alert.AlertType.WARNING);
+        alert.setHeaderText("CUIDADO");
+        alert.setContentText("¿Estas seguro de que deseas borrar este producto del pedido? Los cambios seran permanentes");
+        alert.showAndWait().ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                try {
+                    if (tablaProductos.getSelectionModel().getSelectedItem() != null) {
 
-                itemDAOImp.delete(tablaProductos.getSelectionModel().getSelectedItem());
+                        //Borramos el item de la base de datos
+                        itemDAOImp.delete(tablaProductos.getSelectionModel().getSelectedItem());
 
-                if (Session.getPedidoactual().getTotal() > tablaProductos.getSelectionModel().getSelectedItem().getPedido().getTotal()) {
-                    Session.getPedidoactual().setTotal((int) (Session.getPedidoactual().getTotal() - tablaProductos.getSelectionModel().getSelectedItem().getProducto().getPrecio()));
-                } else Session.getPedidoactual().setTotal(0);
+                        //Le restamos el precio del item al pedido en local
+                        if (Session.getPedidoactual().getTotal() > tablaProductos.getSelectionModel().getSelectedItem().getPedido().getTotal()) {
+                            Session.getPedidoactual().setTotal((int) (Session.getPedidoactual().getTotal() - tablaProductos.getSelectionModel().getSelectedItem().getProducto().getPrecio()));
+                        } else Session.getPedidoactual().setTotal(0);
 
-                Session.getPedidoactual().getItems().remove(tablaProductos.getSelectionModel().getSelectedItem());
+                        //Le quitamos el item en local al pedido
+                        Session.getPedidoactual().getItems().remove(tablaProductos.getSelectionModel().getSelectedItem());
 
-                tablaProductos.getItems().remove(tablaProductos.getSelectionModel().getSelectedItem());
+                        //Lo quitamos de la tabla y lo refrescamos
+                        tablaProductos.getItems().remove(tablaProductos.getSelectionModel().getSelectedItem());
+                        tablaProductos.refresh();
 
-                tablaProductos.refresh();
+                    }
+                } catch (IllegalArgumentException ignored) {
+                }
+
+
             }
-        }catch (IllegalArgumentException ignored){
-
-        }
+        });
 
 
     }

@@ -41,6 +41,9 @@ public class Pedido implements Serializable {
     @Transient
     private String fechaFormateada;
 
+    /**
+     * Constructor de la clase pedido
+     */
     public Pedido() {
 
         //Inicializacion de la fecha, cantidad ,usuario y codigo de pedido por defecto
@@ -61,6 +64,11 @@ public class Pedido implements Serializable {
 
     }
 
+    /**
+     * Metodo para juntar un pedido en otro
+     * @param viejo perido sobre el que queremos volcar los datos
+     * @param nuevo pedido del que cogemos los datos para volcar
+     */
     public static void merge(Pedido viejo, Pedido nuevo){
         viejo.setId(nuevo.getId());
         viejo.setFecha(nuevo.getFecha());
@@ -71,6 +79,10 @@ public class Pedido implements Serializable {
 
     }
 
+    /**
+     * Metodo to string de los pedidos
+     * @return String con los datos del pedido
+     */
     @Override
     public String toString() {
         return "Pedido{" +

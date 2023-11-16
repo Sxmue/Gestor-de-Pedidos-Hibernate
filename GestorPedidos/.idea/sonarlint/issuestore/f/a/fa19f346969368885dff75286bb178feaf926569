@@ -1,5 +1,6 @@
 
-j
-java:S1128"MRemove this unused import 'com.cesur.gestorpedidos.models.producto.Producto'.(”ˆ 8ÁÚóí¼1
-M
-java:S1128"0Remove this unused import 'java.util.ArrayList'.(÷‰îƒ8ÁÚóí¼1
+v	java:S116>"URename this field "btnAÃ±adir" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Çè‚øÿÿÿÿ8üù²ú¼1
+N
+java:S1602w",Remove useless curly braces around statement(–ã›àÿÿÿÿÿ8ƒú²ú¼1
+p	java:S100Ç"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò¡©öşÿÿÿÿ8Ş¢³ú¼1
+D	java:S108è")Either remove or fill this block of code.(ßâ8‰ú²ú¼1

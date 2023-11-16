@@ -32,7 +32,6 @@ public class PrincipalView implements Initializable {
     ObservableList<Pedido> observablePedidos;
 
 
-
     @javafx.fxml.FXML
     private TableView<Pedido> tablaPedidos;
     @javafx.fxml.FXML
@@ -66,7 +65,6 @@ public class PrincipalView implements Initializable {
 
         //Inicializacion de la tabla Pedidos
         inicializadorTabla();
-
 
 
         //---------Combobox---------/
@@ -114,6 +112,7 @@ public class PrincipalView implements Initializable {
 
     /**
      * Metodo para mostrar la informacion del pedido con un doble click
+     *
      * @param event Listener de la propiedad
      */
     @javafx.fxml.FXML
@@ -129,7 +128,6 @@ public class PrincipalView implements Initializable {
 
     /**
      * Metodo para la inicializacion de la tabla pedidos
-     *
      */
     private void inicializadorTabla() {
         tablaPedidos.getItems().clear();
@@ -146,7 +144,7 @@ public class PrincipalView implements Initializable {
      * @param observablePedidos observable con la lista de pedidos
      */
     private void inicializadorCombobox(ObservableList<Pedido> observablePedidos) {
-       Set<String> anhos = new HashSet<>();
+        Set<String> anhos = new HashSet<>();
         anhos.add("Cualquiera");
 
         for (Pedido s : observablePedidos) {
@@ -189,6 +187,7 @@ public class PrincipalView implements Initializable {
 
     /**
      * Metodo para eliminar un pedido
+     *
      * @param actionEvent
      */
     @javafx.fxml.FXML
@@ -196,24 +195,33 @@ public class PrincipalView implements Initializable {
 
         Pedido p = tablaPedidos.getSelectionModel().getSelectedItem();
 
-        if(p!= null){
+        if (p != null) {
+            var alert = new Alert(Alert.AlertType.WARNING);
+            alert.setHeaderText("CUIDADO");
+            alert.setContentText("¿Estas seguro de que deseas borrar este pedido? Los cambios seran permanentes");
+            alert.showAndWait().ifPresent(response -> {
+                if (response == ButtonType.OK) {
 
+                    //Borramos el pedido de la base de datos
+                    pedidoDAO.borrarPedido(p);
 
-            //TODO PREGUNTARLE LA DUDA A FRANCISCO DE PORQUE HIBERNATE NO ME BORRA EL PEDIDO DE LA LISTA DE PEDIDOS DEL USUARIO AUTOMATICAMENTE
-            pedidoDAO.borrarPedido(p);
-            Session.setUsuarioLogueado(usuarioDao.borrarPedido(p));
+                    //Le actualizamos al usuario logueado la lista de pedidos con el pedido borrado
+                    Session.setUsuarioLogueado(usuarioDao.borrarPedido(p));
 
-            observablePedidos.remove(p);
-            tablaPedidos.getItems().clear();
-            tablaPedidos.getItems().addAll(observablePedidos);
-            tablaPedidos.refresh();
+                    //Lo quitamos del observable y actualizamos la tabla
+                    observablePedidos.remove(p);
+                    tablaPedidos.getItems().clear();
+                    tablaPedidos.getItems().addAll(observablePedidos);
+                    tablaPedidos.refresh();
 
+                }
+            });
         }
-
     }
 
     /**
      * Listener para crear un pedido
+     *
      * @param actionEvent
      */
     @javafx.fxml.FXML
@@ -221,12 +229,16 @@ public class PrincipalView implements Initializable {
 
         Pedido p = new Pedido();
 
+        //Le añadimos el pedido creado al usuario en local
         Session.getUsuarioLogueado().getPedidos().add(p);
 
-        Pedido t =pedidoDAO.guardarPedido(p);
+        //Guardamos el pedido en la base de datos
+        Pedido t = pedidoDAO.guardarPedido(p);
 
+        //Lo ponemos de pedido actual
         Session.setPedidoactual(t);
 
+        //cambiamos de ventana
         App.loadFXML("product-view.fxml");
 
     }

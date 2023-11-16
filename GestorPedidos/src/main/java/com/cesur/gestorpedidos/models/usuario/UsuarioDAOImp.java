@@ -20,8 +20,9 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
     /**
      * Metodo para leer un Usuario de la base de datos
+     *
      * @param nombre nombre del usuario
-     * @param pass contraseña del usuario
+     * @param pass   contraseña del usuario
      * @return el usuario de la base de datos
      */
     @Override
@@ -29,53 +30,51 @@ public class UsuarioDAOImp implements UsuarioDAO {
 
         Usuario u = null;
 
-        try(Session s = HibernateUtil.getSessionFactory().openSession()){
+        try (Session s = HibernateUtil.getSessionFactory().openSession()) {
 
-            Query<Usuario> q = s.createQuery("FROM Usuario where nombre=:n and pass=:p",Usuario.class);
+            Query<Usuario> q = s.createQuery("FROM Usuario where nombre=:n and pass=:p", Usuario.class);
 
-            q.setParameter("n",nombre);
-            q.setParameter("p",pass);
-
+            q.setParameter("n", nombre);
+            q.setParameter("p", pass);
             try {
-
                 u = q.getSingleResult();
 
-            }catch(Exception e){
-                System.out.println(e.getMessage());
+            } catch (Exception e) {
+                LOG.error(e.getMessage());
             }
 
+        } catch (Exception e) {
 
-        }catch (Exception e){
-
-            LOG.error("Algo ha ido mal en la session");
-
-            System.out.println(e.getMessage());
+            LOG.error(e.getMessage());
 
         }
 
-
-
-      return u;
+        return u;
     }
 
-    public Usuario borrarPedido(Pedido p){
+    /**
+     * Metodo para borrar un pedido del usuario
+     *
+     * @param p el pedido que queremos borrar
+     * @return el Usuario con la lista de pedidos actualizada
+     */
+    public Usuario borrarPedido(Pedido p) {
 
         Usuario result = null;
 
-        try(Session s = HibernateUtil.getSessionFactory().openSession()){
+        try (Session s = HibernateUtil.getSessionFactory().openSession()) {
 
             //Traemos el objeto a borrar para que sea persistente
-            Usuario u =s.get(Usuario.class, com.cesur.gestorpedidos.Session.getUsuarioLogueado().getId());
+            Usuario u = s.get(Usuario.class, com.cesur.gestorpedidos.Session.getUsuarioLogueado().getId());
 
             u.getPedidos().remove(p);
 
-                result=u;
+            result = u;
         }
 
 
         return result;
     }
-
 
 
 }

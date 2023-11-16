@@ -14,10 +14,15 @@ import java.util.ArrayList;
  * Implementacion del DAO pedido
  */
 public class PedidoDAOImp implements PedidoDAO {
+
     /* Log para trazar la clase */
     static final org.slf4j.Logger LOG = LoggerFactory.getLogger(PedidoDAOImp.class);
 
 
+    /**
+     * Metodo para borrar un pedido
+     * @param p pedido que queremos borrar
+     */
     @Override
     public void borrarPedido(Pedido p) {
 
@@ -34,6 +39,11 @@ public class PedidoDAOImp implements PedidoDAO {
 
     }
 
+    /**
+     * Metodo para guardar un pedido
+     * @param p pedido que queremos guardar
+     * @return el pedido persistido
+     */
     @Override
     public Pedido guardarPedido(Pedido p) {
 
@@ -63,6 +73,10 @@ public class PedidoDAOImp implements PedidoDAO {
 
     }
 
+    /**
+     * Metodo para actualizar un pedido
+     * @param p el pedido que queremos actualizar
+     */
     @Override
     public void  actualizarPedido(Pedido p) {
 
@@ -75,7 +89,6 @@ public class PedidoDAOImp implements PedidoDAO {
 
             Pedido.merge(update, p);
 
-            //Ejecutamos el commit y automaticamente se actualiza la base de datos
             t.commit();
 
 

@@ -31,6 +31,10 @@ public class Usuario implements Serializable {
     @OneToMany(mappedBy = "usuario",cascade = CascadeType.REMOVE,fetch = FetchType.EAGER)
     private List<Pedido> pedidos = new ArrayList<>();
 
+    /**
+     * Metodo toString de la clase Usuario
+     * @return String con los datos del usuario
+     */
     @Override
     public String toString() {
         return "Usuario{" +

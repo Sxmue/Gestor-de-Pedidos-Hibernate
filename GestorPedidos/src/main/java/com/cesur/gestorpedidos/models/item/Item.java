@@ -33,6 +33,10 @@ public class Item implements Serializable {
     private Producto producto;
 
 
+    /**
+     * toString de la clase Item
+     * @return String con los datos de la clase Item
+     */
     @Override
     public String toString() {
         return "Item{" +
