@@ -1,13 +1,8 @@
 package com.cesur.gestorpedidos.models.pedido;
 
-import com.cesur.gestorpedidos.Session;
 import com.cesur.gestorpedidos.database.HibernateUtil;
-import com.cesur.gestorpedidos.models.item.Item;
-import com.cesur.gestorpedidos.models.usuario.Usuario;
 import org.hibernate.Transaction;
 import org.slf4j.LoggerFactory;
-
-import java.util.ArrayList;
 
 
 /**

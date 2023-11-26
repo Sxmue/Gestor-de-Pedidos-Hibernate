@@ -1,18 +1,12 @@
 package com.cesur.gestorpedidos.models.item;
 
-import com.cesur.gestorpedidos.Session;
+
 import com.cesur.gestorpedidos.database.HibernateUtil;
-import com.cesur.gestorpedidos.models.pedido.Pedido;
-import com.cesur.gestorpedidos.models.producto.Producto;
-import com.cesur.gestorpedidos.models.producto.ProductoDAOImp;
-import com.cesur.gestorpedidos.models.usuario.Usuario;
 import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.LoggerFactory;
-
-import java.sql.Connection;
 import java.util.ArrayList;
-import java.util.List;
+
 
 /**
  * Implementacion del DAO Item

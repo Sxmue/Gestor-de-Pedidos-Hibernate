@@ -1,6 +1,8 @@
 
-v	java:S116>"URename this field "btnAÃ±adir" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Çè‚øÿÿÿÿ8üù²ú¼1
+v	java:S116F"URename this field "btnAÃ±adir" to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Çè‚øÿÿÿÿ8äƒÕ¿½1
 N
-java:S1602w",Remove useless curly braces around statement(–ã›àÿÿÿÿÿ8ƒú²ú¼1
-p	java:S100Ç"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò¡©öşÿÿÿÿ8Ş¢³ú¼1
-D	java:S108è")Either remove or fill this block of code.(ßâ8‰ú²ú¼1
+java:S1602r",Remove useless curly braces around statement(–ã›àÿÿÿÿÿ8ø€ÛÀ1
+p	java:S100Ø"NRename this method name to match the regular expression '^[a-z][a-zA-Z0-9]*$'.(Ò¡©öşÿÿÿÿ8õƒÕ¿½1
+u
+java:S3776ì"RRefactor this method to reduce its Cognitive Complexity from 16 to the 15 allowed.(ı…½ùÿÿÿÿ8ôìŸÜÀ1
+D	java:S108†")Either remove or fill this block of code.(ßâ8ùƒÕ¿½1

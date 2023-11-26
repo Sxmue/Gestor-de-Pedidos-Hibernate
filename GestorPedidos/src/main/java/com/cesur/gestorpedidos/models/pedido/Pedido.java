@@ -66,7 +66,7 @@ public class Pedido implements Serializable {
 
     /**
      * Metodo para juntar un pedido en otro
-     * @param viejo perido sobre el que queremos volcar los datos
+     * @param viejo pedido sobre el que queremos volcar los datos
      * @param nuevo pedido del que cogemos los datos para volcar
      */
     public static void merge(Pedido viejo, Pedido nuevo){

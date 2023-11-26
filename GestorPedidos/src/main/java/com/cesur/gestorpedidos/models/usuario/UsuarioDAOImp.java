@@ -3,7 +3,6 @@ package com.cesur.gestorpedidos.models.usuario;
 
 import com.cesur.gestorpedidos.models.pedido.Pedido;
 import org.hibernate.Session;
-import org.hibernate.Transaction;
 import org.hibernate.query.Query;
 import org.slf4j.LoggerFactory;
 import com.cesur.gestorpedidos.database.HibernateUtil;

@@ -247,9 +247,9 @@ public class ProductView implements Initializable {
                         itemDAOImp.delete(tablaProductos.getSelectionModel().getSelectedItem());
 
                         //Le restamos el precio del item al pedido en local
-                        if (Session.getPedidoactual().getTotal() > tablaProductos.getSelectionModel().getSelectedItem().getPedido().getTotal()) {
                             Session.getPedidoactual().setTotal((int) (Session.getPedidoactual().getTotal() - tablaProductos.getSelectionModel().getSelectedItem().getProducto().getPrecio()));
-                        } else Session.getPedidoactual().setTotal(0);
+                         if(Session.getPedidoactual().getTotal()<0) Session.getPedidoactual().setTotal(0);
+                         if(Session.getPedidoactual().getItems().isEmpty()) Session.getPedidoactual().setTotal(0);
 
                         //Le quitamos el item en local al pedido
                         Session.getPedidoactual().getItems().remove(tablaProductos.getSelectionModel().getSelectedItem());
