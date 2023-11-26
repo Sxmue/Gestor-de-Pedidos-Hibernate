@@ -16,7 +16,7 @@
         <!-- URL QUE LA SACAMOS DE CONECTAR CON MAVEN A LA BASE DE DATOS A LA DERECHA, EN PROPIEDADES -->
         <property name="hibernate.connection.url">jdbc:mysql://localhost:3306/gestorpedidos</property>
         <!-- PASS DE LA DATABASE -->
-        <property name="hibernate.connection.password">Rastarrafi-1</property>
+        <property name="hibernate.connection.password"> </property>
         <!-- USUARIO DE LA DATABASE -->
         <property name="hibernate.connection.username">root</property>
         <property name="dialect">org.hibernate.dialect.MySQLDialect</property>
