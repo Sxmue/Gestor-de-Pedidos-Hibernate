@@ -1,5 +1,6 @@
 package com.cesur.gestorpedidos.controllers;
 
+import Database.Database;
 import com.cesur.gestorpedidos.App;
 import com.cesur.gestorpedidos.Session;
 import com.cesur.gestorpedidos.models.item.Item;
@@ -17,11 +18,22 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import com.itextpdf.text.Document;
 import javafx.util.StringConverter;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.engine.JasperPrint;
+import net.sf.jasperreports.engine.export.JRPdfExporter;
+import net.sf.jasperreports.export.SimpleExporterInput;
+import net.sf.jasperreports.export.SimpleOutputStreamExporterOutput;
+import net.sf.jasperreports.export.SimplePdfExporterConfiguration;
+import net.sf.jasperreports.swing.JRViewer;
 
+import javax.swing.*;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.net.URL;
+import java.sql.Connection;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.ResourceBundle;
 
@@ -29,6 +41,12 @@ public class ProductView implements Initializable {
 
     /*Obervable para el trabajo con la lista*/
     private ObservableList<Item> observableItems;
+
+    HashMap hm;
+
+    Connection c;
+
+    JasperPrint jasperPrint;
 
     /*Variable para trabajar con el dao Items*/
     ItemDAOImp itemDAOImp = new ItemDAOImp();
@@ -70,10 +88,27 @@ public class ProductView implements Initializable {
     private Button btnAñadir;
     @javafx.fxml.FXML
     private Button btnEliminar;
+    @javafx.fxml.FXML
+    private MenuItem menuVisualizar;
+    @javafx.fxml.FXML
+    private MenuItem menuExportar;
 
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
+
+        //Inicializaciones para la generacion de informes
+         c = Database.getConnection();
+        hm = new HashMap<>();
+
+        hm.put("idPedido",Session.getPedidoactual().getCodigo());
+
+        try {
+            jasperPrint = JasperFillManager.fillReport("src/main/resources/Informe.jasper",hm,c);
+        } catch (JRException e) {
+            throw new RuntimeException(e);
+        }
+
 
         if (comboProductos.getValue() != null) {
             spinnerCantidad.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, comboProductos.getValue().getProducto().getCantidad(), 1, 1));
@@ -266,6 +301,27 @@ public class ProductView implements Initializable {
             }
         });
 
+
+    }
+
+    @javafx.fxml.FXML
+    public void visualizarAlbaran(ActionEvent actionEvent) throws JRException {
+        JRViewer viewer = new JRViewer(jasperPrint);
+        JFrame frame = new JFrame("Albarán");
+        frame.getContentPane().add(viewer);
+        frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+        frame.pack();
+        frame.setVisible(true);
+    }
+
+    @javafx.fxml.FXML
+    public void exportarAlbaran(ActionEvent actionEvent) throws JRException {
+
+        JRPdfExporter exp = new JRPdfExporter();
+        exp.setExporterInput(new SimpleExporterInput(jasperPrint));
+        exp.setExporterOutput(new SimpleOutputStreamExporterOutput("Albarán.pdf"));
+        exp.setConfiguration(new SimplePdfExporterConfiguration());
+        exp.exportReport();
 
     }
 }

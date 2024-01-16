@@ -1,5 +1,6 @@
 package com.cesur.gestorpedidos.controllers;
 
+import Database.Database;
 import com.cesur.gestorpedidos.App;
 import com.cesur.gestorpedidos.Session;
 import com.cesur.gestorpedidos.models.pedido.Pedido;
@@ -15,8 +16,14 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.event.Event;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperFillManager;
+import net.sf.jasperreports.swing.JRViewer;
+
+import javax.swing.JFrame;
 
 import java.net.URL;
+import java.sql.Connection;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.*;

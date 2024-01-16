@@ -1,5 +1,17 @@
 
+K
+java:S1128".Remove this unused import 'Database.Database'.(øŸçØ8Ş£—Ñ1
+f
+java:S1128"DRemove this unused import 'net.sf.jasperreports.engine.JRException'.(¥Ã—ôûÿÿÿÿ8¦¯—Ñ1
+l
+java:S1128"JRemove this unused import 'net.sf.jasperreports.engine.JasperFillManager'.(ü°ğäüÿÿÿÿ8ß£—Ñ1
+b
+java:S1128"@Remove this unused import 'net.sf.jasperreports.swing.JRViewer'.(¢ÉÆËüÿÿÿÿ8ß£—Ñ1
+Q
+java:S1128"/Remove this unused import 'javax.swing.JFrame'.(ßŒŸûùÿÿÿÿ8ß£—Ñ1
+M
+java:S1128"0Remove this unused import 'java.sql.Connection'.(¥ËôÖ8ß£—Ñ1
 R
-java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬èıÿÿÿÿ8Èï£À½1
+java:S1128"0Remove this unused import 'java.time.LocalDate'.(›‘¬èıÿÿÿÿ8æŠø”Ñ1
 \
-java:S1128"?Remove this unused import 'java.time.format.DateTimeFormatter'.(‰÷÷ª8Èï£À½1
+java:S1128"?Remove this unused import 'java.time.format.DateTimeFormatter'.(‰÷÷ª8æŠø”Ñ1

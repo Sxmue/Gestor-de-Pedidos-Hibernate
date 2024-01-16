@@ -49,11 +49,23 @@
       <artifactId>logback-classic</artifactId>
       <version>1.4.5</version>
     </dependency>
+
+    <dependency>
+      <groupId>net.sf.barcode4j</groupId>
+      <artifactId>barcode4j</artifactId>
+      <version>2.1</version> <!-- Asegúrate de usar la versión correcta -->
+    </dependency>
     <!-- SLF4J -->
     <dependency>
       <groupId>org.slf4j</groupId>
       <artifactId>slf4j-api</artifactId>
       <version>2.0.6</version>
+    </dependency>
+
+    <dependency>
+      <groupId>net.sf.jasperreports</groupId>
+      <artifactId>jasperreports</artifactId>
+      <version>6.21.0</version>
     </dependency>
 
     <dependency>
@@ -66,6 +78,18 @@
       <groupId>org.hibernate.orm</groupId>
       <artifactId>hibernate-core</artifactId>
       <version>6.3.0.Final</version>
+    </dependency>
+
+    <dependency>
+      <groupId>com.google.zxing</groupId>
+      <artifactId>core</artifactId>
+      <version>3.4.1</version> <!-- Reemplaza con la versión más reciente disponible -->
+    </dependency>
+
+    <dependency>
+      <groupId>org.apache.xmlgraphics</groupId>
+      <artifactId>batik-bridge</artifactId>
+      <version>1.14</version> <!-- La versión puede variar, verifica la última versión en el sitio web -->
     </dependency>
 
 

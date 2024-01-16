@@ -3156,3 +3156,5 @@ w
 G.idea/sonarlint/issuestore/7/f/7fcfa54794c2b70e0754ffed1786301a442e858f,f\1\f13777d93f89a70de1323eda36c784e59896f3ff
 w
 G.idea/sonarlint/issuestore/7/f/7f96842d4fe1c3c102f151fbc114eb5dc34b6dfd,b\c\bc7d57740867239a677cbad69bf056f0aac87fd3
+<
+Albarán.pdf,3\0\30a6b7e126801ee6fa08b87d98bae623289b617d

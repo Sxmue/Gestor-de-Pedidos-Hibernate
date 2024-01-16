@@ -8,11 +8,12 @@ module com.cesur.gestortareas {
     requires ch.qos.logback.classic;
     requires ch.qos.logback.core;
     requires itextpdf;
+    requires jasperreports;
 
     requires org.hibernate.orm.core;
     requires jakarta.persistence;
     requires java.naming;
-
+    requires java.desktop;
 
 
     opens img;

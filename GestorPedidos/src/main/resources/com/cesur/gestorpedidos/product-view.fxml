@@ -106,9 +106,11 @@
                         <MenuItem fx:id="logOut" mnemonicParsing="false" onAction="#logOut" text="Log Out" />
                      </items>
                   </Menu>
-                  <Menu mnemonicParsing="false" text="Exportar">
+                  <Menu mnemonicParsing="false" text="Albarán">
                     <items>
-                      <MenuItem fx:id="pdf" mnemonicParsing="false" onAction="#exportarPDF" text="A PDF" />
+                        <MenuItem fx:id="menuVisualizar" mnemonicParsing="false" onAction="#visualizarAlbaran" text="Visualizar Albarán" />
+                        <MenuItem fx:id="menuExportar" mnemonicParsing="false" onAction="#exportarAlbaran" text="Exportar Albarán" />
+                      <MenuItem fx:id="pdf" mnemonicParsing="false" onAction="#exportarPDF" text="Generar PDF" />
                     </items>
                   </Menu>
                </menus>
