@@ -319,7 +319,7 @@ public class ProductView implements Initializable {
 
         JRPdfExporter exp = new JRPdfExporter();
         exp.setExporterInput(new SimpleExporterInput(jasperPrint));
-        exp.setExporterOutput(new SimpleOutputStreamExporterOutput("Albarán.pdf"));
+        exp.setExporterOutput(new SimpleOutputStreamExporterOutput("Albarán-"+Session.getPedidoactual().getCodigo()+".pdf"));
         exp.setConfiguration(new SimplePdfExporterConfiguration());
         exp.exportReport();
 
